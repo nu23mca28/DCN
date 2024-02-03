@@ -2,7 +2,10 @@
 struct packet{
     int seqno;
     char a[50];
-    float time;
+    int pid;
+    char source_ip[20];
+    char dest_ip[20];
+    int port;
 }p[100],temp;
 
 void main(){
@@ -18,13 +21,16 @@ void main(){
             }
         }
         p[i].seqno=num;
-        printf("Enter the message : ");
+        printf("Enter the message, packet_id, source_ip, destination_ip, port number : ");
         scanf("%s",&p[i].a);
-        p[i].time=rand();
+        scanf("%d",&p[i].pid);
+        scanf("%s",&p[i].source_ip);
+        scanf("%s",&p[i].dest_ip);
+        scanf("%d",&p[i].port);
     }
     printf("Before sorting : \n");
     for(i=0;i<n;i++){
-        printf("%d\t%s\t%f\n",p[i].seqno,p[i].a,p[i].time);
+        printf("%d\t%s\t%d\t%s\t%s\t%d\n",p[i].seqno,p[i].a,p[i].pid,p[i].source_ip,p[i].dest_ip,p[i].port);
     }
     insertionSort(n);
 }
@@ -40,6 +46,6 @@ void insertionSort(int n){
     }
     printf("After sorting : \n");
     for(i=0;i<n;i++){
-        printf("\n%d\t%s\t%f",p[i].seqno,p[i].a,p[i].time);
+        printf("%d\t%s\t%d\t%s\t%s\t%d\n",p[i].seqno,p[i].a,p[i].pid,p[i].source_ip,p[i].dest_ip,p[i].port);
     }
 }
