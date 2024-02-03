@@ -1,0 +1,99 @@
+#include<stdio.h>
+struct packet
+{
+    int seqno;
+    float time;
+    char message[100];
+};
+int checkframe(int a[],int n,int s)
+{
+    for(int i=0;i<n;i++)
+    {
+        if(a[i]==s)
+        return(1);
+    }
+    return(0);
+}
+
+
+int partition(struct packet a[],int low,int high)
+{
+     struct packet temp;
+    int pivot=a[high].seqno;
+
+  int i=(low-1);
+
+  for(int j=low;j<=high;j++)
+  {
+    if(a[j].seqno<pivot)
+    {
+      i++;
+      temp=a[i];
+        a[i]=a[j];
+        a[j]=temp;
+    }
+  }
+   temp=a[i+1];
+        a[i+1]=a[high];
+        a[high]=temp;
+  return (i+1);
+}
+
+void quickSort(struct packet arr[],int low,int high)
+{
+  if(low<high)
+  {
+
+    int pi=partition(arr,low,high);
+    quickSort(arr,low,pi-1);
+    quickSort(arr,pi+1,high);
+  }
+}
+
+void main()
+{
+    struct packet frame[10];
+    int n;
+    printf("Enter the number of packets\n");
+    scanf("%d",&n);
+    int seq[n];
+    for(int i=0;i<n;i++)
+    {
+          seq[i]=-1;
+    }
+    for(int i=0;i<n;i++)
+    {
+        int num;
+        do{
+        num=rand();
+
+        }while(checkframe(seq,n,num)||num<999||num>9999);
+        seq[i]=num;
+    }
+    for(int i=0;i<n;i++)
+    {
+        printf("please enter the time and message for sequence number:%d\n",seq[i]);
+        scanf("%f",&frame[i].time);
+        scanf("%s",frame[i].message);
+        frame[i].seqno=seq[i];
+    }
+    printf(" the details are:\n");
+    for(int i=0;i<n;i++)
+    {
+    printf("--------------------------------------\n");
+        printf("sequnce no :%d\n",frame[i].seqno);
+        printf("Time is :%f\n",frame[i].time);
+        printf("The message is %s\n",frame[i].message);
+
+    }
+    quickSort(frame,0,n-1);
+    printf("\n***********************\nthe frames details after sorting are:\n");
+    for(int i=0;i<n;i++)
+    {
+         printf("--------------------------------------\n");
+        printf("sequnce no :%d\n",frame[i].seqno);
+        printf("Time is :%f\n",frame[i].time);
+        printf("The message is %s\n",frame[i].message);
+    }
+
+}
