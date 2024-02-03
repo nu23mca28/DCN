@@ -1,0 +1,45 @@
+#include<stdio.h>
+struct packet{
+    int seqno;
+    char a[50];
+    float time;
+}p[100],temp;
+
+void main(){
+    int i,j,n,num;
+    printf("Enter the number of frames : ");
+    scanf("%d",&n);
+    for(i=0;i<n;i++){
+        slabel:
+        num=rand()%9000+1000;
+        for(j=0;j<=1;j++){
+            if(p[j].seqno==num){
+                goto slabel;
+            }
+        }
+        p[i].seqno=num;
+        printf("Enter the message : ");
+        scanf("%s",&p[i].a);
+        p[i].time=rand();
+    }
+    printf("Before sorting : \n");
+    for(i=0;i<n;i++){
+        printf("%d\t%s\t%f\n",p[i].seqno,p[i].a,p[i].time);
+    }
+    insertionSort(n);
+}
+
+void insertionSort(int n){
+    int i, j;
+    for (i = 1; i < n; i++){
+        temp = p[i];
+        for(j = i - 1;j >= 0 && p[j].seqno > temp.seqno;j = j - 1){
+            p[j + 1] = p[j];
+        }
+        p[j + 1] = temp;
+    }
+    printf("After sorting : \n");
+    for(i=0;i<n;i++){
+        printf("\n%d\t%s\t%f",p[i].seqno,p[i].a,p[i].time);
+    }
+}
