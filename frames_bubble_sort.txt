@@ -1,0 +1,48 @@
+#include<stdio.h>
+struct packet{
+    int seqno;
+    char a[50];
+    float time;
+}p[100],temp;
+
+void main(){
+    int i,j,n,num;
+    printf("Enter the number of frames : ");
+    scanf("%d",&n);
+    for(i=0;i<n;i++){
+        slabel:
+        num=rand();
+        for(j=0;j<=1;j++){
+            if(p[j].seqno==num){
+                goto slabel;
+            }
+        }
+        p[i].seqno=num;
+        printf("Enter the message : ");
+        scanf("%s",&p[i].a);
+        p[i].time=rand();
+    }
+    printf("Before sorting : \n");
+    for(i=0;i<n;i++){
+        printf("%d\t%s\t%f\n",p[i].seqno,p[i].a,p[i].time);
+    }
+    bubblesort(n);
+}
+
+void bubblesort(int n){
+    int i,j;
+    for(i=0;i<n-1;i++){
+        for(j=0;j<n-i-1;j++){
+            if(p[j].seqno>p[j+1].seqno){
+                temp=p[j+1];
+                p[j+1]=p[j];
+                p[j]=temp;
+            }
+        }
+    }
+    printf("After sorting : \n");
+    for(i=0;i<n;i++){
+        printf("%d\t%s\t%f\n",p[i].seqno,p[i].a,p[i].time);
+    }
+}
+
